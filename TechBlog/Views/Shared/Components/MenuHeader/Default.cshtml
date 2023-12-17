@@ -1,0 +1,52 @@
+﻿@using TechBlog.Ultilities;
+@model IList<TechBlog.Models.Category>
+<header class="tech-header header main-header">
+    <div class="container-fluid">
+        <nav class="navbar navbar-toggleable-md navbar-inverse  fixed-top bg-inverse">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="tech-index.html"><img src="~/Client/images/version/tech-logo.png" alt=""></a>
+            <div class="collapse justify-content-between navbar-collapse" id="navbarCollapse">
+                <div class="main-menu f-right d-none d-lg-block">
+                    <nav>
+                        <ul id="navigation" class="mb-0">
+                            <li><a href="/">Trang chủ</a></li>
+                            @*<li><a href="/">Giới thiệu</a></li>*@
+                            @foreach (var item in Model.Where(m => m.Levels == 1))
+                            {
+                                var url = Functions.TitleSlugGeneration("danh-muc",item.CategoryName, item.CategoryId);
+                                var smn = Model.Where(m => m.CategoryParrentId == item.CategoryId).ToList();
+                                <li>
+                                    <a href="/@url">@item.CategoryName</a>
+                                    @if(smn != null)
+                                    {
+                                        <ul class="submenu">
+                                            @foreach(var mn in smn)
+                                            {
+                                                var smnlink = Functions.TitleSlugGeneration("danh-muc",mn.CategoryName, mn.CategoryId);
+                                                <li class="w-100"><a href="/@smnlink">@mn.CategoryName</a></li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                            <li><a href="/lien-he">Liên hệ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <ul class="navbar-nav mr-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-android"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-apple"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div><!-- end container-fluid -->
+</header><!-- end market-header -->

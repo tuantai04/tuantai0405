@@ -1,0 +1,178 @@
+﻿@model IList<TechBlog.Models.Category>;
+
+@{
+    ViewData["Title"] = "ListCategoryProduct";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h3 class="text-center">Quản lý danh mục bài viết</h3>
+</div><!-- End Page Title -->
+
+<section class="section dashboard">
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="action-box text-end px-2 mt-3">
+                <a class="btn btn-primary" asp-controller="Category" asp-action="Create" asp-area="Admin">Thêm mới</a>
+            </div>
+            <div class="col-md-12 table-custom table">
+
+                <div class="table-body">
+                    <div class="row table-header align-items-center">
+                        <div class="col-1">
+                            <div class="table-cell"></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="table-cell"><span>Tên danh mục</span></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="table-cell"><span>Mô tả danh mục</span></div>
+                        </div>
+                        <div class="col-2">
+                            <div class="table-cell text-center"><span>Danh mục con</span></div>
+                        </div>
+                        <div class="col-1">
+                            <div class="table-cell text-center"><span>Hiển thị</span></div>
+                        </div>
+                        <div class="col-2">
+                            <div class="table-cell text-center"><span>Chức năng</span></div>
+                        </div>
+                    </div>
+                    @foreach (var item in Model.Where(m => m.Levels == 1))
+                    {
+                        var target = "#" + item.CategorySlug;
+                        var subitem = Model.Where(m => m.CategoryParrentId == item.CategoryId).ToList();
+                        <div class="row table-item align-items-center">
+                            <div class="col-1">
+                                <div class="table-cell">
+                                    <a class="nav-link collapsed" data-bs-target="@target" data-bs-toggle="collapse" href="#">
+                                        <i class="tf-icons bx bx-chevron-right table-nav-icon ms-auto"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="table-cell"><span>@item.CategoryName</span></div>
+                            </div>
+                            <div class="col-3">
+                                <div class="table-cell"><span>@item.CategoryDesc</span></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="table-cell text-center"><span>@subitem.Count</span></div>
+                            </div>
+                            <div class="col-1">
+                                <div class="table-cell text-center"><span>@item.IsActive</span></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="table-cell text-center">
+                                    <a class="btn px-2 text-white btn-warning" asp-action="EditCate" asp-controller="Category" asp-route-id="@item.CategoryId"><i class="tf-icons bx bx-pen"></i></a>
+                                    <button class="btn px-2 text-white btn-danger" onclick="DisplayDeleteModal(@item.CategoryId)"><i class="tf-icons bx bx-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="@item.CategorySlug" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                            @if (subitem.Count > 0)
+                            {
+                                @foreach (var SItem in subitem)
+                                {
+                                    <div class="row table-item align-items-center">
+                                        <div class="col-1 ">
+                                            <div class="table-cell">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="table-cell" style="padding-left: 1.25rem"><span>@SItem.CategoryName</span></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="table-cell" style="padding-left: 1.25rem"><span>@SItem.CategoryDesc</span></div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="table-cell text-center"><span>0</span></div>
+                                        </div>
+                                        <div class="col-1">
+                                            <div class="table-cell text-center"><span>@SItem.IsActive</span></div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="table-cell text-center">
+                                                <a class="btn px-2 text-white btn-warning" asp-action="EditCate" asp-controller="Category" asp-route-id="@SItem.CategoryId"><i class="tf-icons bx bx-pen"></i></a>
+                                                <button class="btn px-2 text-white btn-danger" onclick="DisplayDeleteModal(@SItem.CategoryId)"><i class="tf-icons bx bx-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="CategoryIdToDelete" />
+                    Bạn có chắc chắn muốn xóa danh mục này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+    document.querySelectorAll('[rel="prev"]')[0].innerHTML = "<"
+    document.querySelectorAll('[rel="next"]')[0].innerHTML = ">"
+</script>
+
+@section Scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#btnConfirmDelete").on("click", function () {
+                let CategoryId = $("#CategoryIdToDelete").val();
+                let UrlHandle = "/Admin/Category/Delete";
+
+                $.ajax({
+                    url: UrlHandle,
+                    type: "Post",
+                    data: {
+                        CategoryId: CategoryId,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            $("#deleteModal").modal("hide");
+                            window.location.reload();
+                        } else {
+                            // $("#deleteModal").modal("hide");
+                            // window.location.reload();
+                        }
+                    },
+
+                })
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        function DisplayDeleteModal(id) {
+            $("#CategoryIdToDelete").val(id);
+            $("#deleteModal").modal("show");
+        }
+    </script>
+}

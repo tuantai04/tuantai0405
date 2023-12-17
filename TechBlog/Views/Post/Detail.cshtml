@@ -1,0 +1,228 @@
+﻿@using PagedList.Core.Mvc;
+@using TechBlog.Ultilities;
+@model TechBlog.Models.Post;
+
+<div class="page-title lb single-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <h2><i class="fa fa-gears bg-orange"></i> @Model.Category.CategoryName</h2>
+            </div><!-- end col -->
+            <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/">@Model.Category.CategoryName</a></li>
+                    <li class="breadcrumb-item active">@Model.Category.CategoryName</li>
+                </ol>
+            </div><!-- end col -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</div><!-- end page-title -->
+
+<section class="section" style="background: #fcfaf6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="sidebar">
+                    <div class="widget">
+                        <div class="banner-spot clearfix">
+                            <div class="banner-img">
+                                <img src="~/client/images/doanh-nhan.jpg" alt="" class="img-fluid">
+                            </div><!-- end banner-img -->
+                        </div><!-- end banner -->
+                    </div><!-- end widget -->
+                    @await Component.InvokeAsync("TrendPost")
+
+                    <div class="widget">
+                        <h2 class="widget-title">Theo dõi chúng tôi</h2>
+
+                        <div class="row text-center">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button facebook-button">
+                                    <i class="fa fa-facebook"></i>
+                                    <p>27k</p>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button twitter-button">
+                                    <i class="fa fa-twitter"></i>
+                                    <p>98k</p>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button google-button">
+                                    <i class="fa fa-google-plus"></i>
+                                    <p>17k</p>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button youtube-button">
+                                    <i class="fa fa-youtube"></i>
+                                    <p>22k</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div><!-- end widget -->
+
+                   @* <div class="widget">
+                        <div class="banner-spot clearfix">
+                            <div class="banner-img">
+                                <img src="~/client/images/banner-sidebar.jpeg" alt="" class="img-fluid">
+                            </div><!-- end banner-img -->
+                        </div><!-- end banner -->
+                    </div>*@<!-- end widget -->
+                </div><!-- end sidebar -->
+            </div><!-- end col -->
+
+            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                <div class="page-wrapper">
+                    <div class="blog-grid-system">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="w-100 mb-0">@Model.PostName</h3>
+                                <div class="blog-meta mb-3">
+                                    <small class="firstsmall "><a class="bg-orange" href="" title="">@Model.Category.CategoryName</a></small>
+                                    <small><a href="" title="">21 July, 2017</a></small>
+                                    <small><a href="tech-author.html" title="">@Model.CreatedByNavigation.FullName</a></small>
+                                    <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> @Model.ViewNumber</a></small>
+
+                                </div>
+                                @Html.Raw(Model.PostDetail)
+                            </div>
+                        </div><!-- end row -->
+                        <div aria-label="Page navigation example" class="text-center mt-3 align-items-center">
+                            <ul class="pagination text-center d-inline-block">
+                                <pager class="pager-container" list="@Model" />
+                            </ul>
+                        </div>
+                        <hr class="invis3">
+                        <div class="comment-input-box">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="mb-1">Bình luận</h4>
+                                </div>
+                                <div class="col-sm-12 col-lg-6 col-xl-6">
+                                    <div class="form-group">
+                                        <input id="user-comment" class="form-control" placeholder="Nhập họ tên của bạn..." />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-12 col-xl-12">
+                                    <div class="form-group">
+                                        <textarea id="content-comment" class="form-control" placeholder="Nhập bình luận của bạn..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn-send-comment" data-postid="@Model.PostId">Gửi ý kiến</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="invis3">
+                        <div class="comment-input-box mt-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="mb-1">Tất cả bình luận</h4>
+                                </div>
+                                <div class="comment-list col-12">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end blog-grid-system -->
+                </div><!-- end page-wrapper -->
+                
+
+            </div><!-- end col -->
+        </div><!-- end row -->
+        <div class="row mt-5">
+            <div class="col-12"><h4 class="text-center">Tin tức liên quan</h4></div>
+                    @if (ViewBag.RecentPost != null)
+                    {
+                        foreach (var item in ViewBag.RecentPost)
+                        {
+                            var url = Functions.CreateSlugName(item.Category.CategoryName) + "/" + Functions.CreateSlugName(item.PostName) + "-" + item.PostId;
+                            <div class="col-md-4">
+                                <div class="blog-box">
+                                    <div class="post-media">
+                                        <a href="/@url" title="">
+                                            <img src="~/images/@item.PostImage" alt="" class="img-fluid">
+                                            <div class="hovereffect">
+                                                <span></span>
+                                            </div><!-- end hover -->
+                                        </a>
+                                    </div><!-- end media -->
+                                    <div class="blog-meta big-meta">
+                                        <span class="color-orange"><a href="tech-category-01.html" title="">Gadgets</a></span>
+                                        <h4><a href="/@url" title="">@item.PostName</a></h4>
+                                        <p>@item.PostTitle</p>
+                                        <small><a href="/@url" title="">14 July, 2017</a></small>
+                                        <small><a href="/@url" title="">@item.CreatedByNavigation.FullName</a></small>
+                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> @item.ViewNumber</a></small>
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <h2 class="text-center text-danger w-100">Chưa có bài viết nào liên quan đến danh mục này</h2>
+                    }
+        </div>
+    </div><!-- end container -->
+</section>
+@section Scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".btn-send-comment").on("click", function () {
+                let usercomment = $("#user-comment").val();
+                let contentcomment = $("#content-comment").val();
+                let postid = $(this).data("postid");
+
+                $.ajax({
+                    url: "/Post/AddComment",
+                    type: "post",
+                    data: {
+                        usercomment: usercomment,
+                        contentcomment: contentcomment,
+                        postid: postid,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            loadComment();
+                            alert(data.message)
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+
+                })
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        function loadComment() {
+            var postid = $(".btn-send-comment").data("postid");
+            $.ajax({
+                url: "/Post/LoadComment",
+                type: "post",
+                data: {
+                    postid: postid,
+                },
+                success: function (data) {
+                    if (data.status == 0) {
+                        $(".comment-list").html(data.content);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+            })
+        }
+        loadComment();
+    </script>
+}

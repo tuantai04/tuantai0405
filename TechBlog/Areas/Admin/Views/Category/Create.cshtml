@@ -1,0 +1,52 @@
+﻿@model TechBlog.Models.Category;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="pagetitle">
+    <h3 class="text-center">Thêm mới danh mục bài viết</h4>
+</div><!-- End Page Title -->
+
+<section class="section mt-4">
+    <div class="row mt-3">
+        <div class="col-md-1"></div>
+        <div class="form-addnew col-md-10 d-flex">
+            <div class="col-md-12">
+                <form asp-action="Create" class="row" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="text" hidden asp-for="IsActive" value="true" class="form-control">
+                    <input type="text" hidden asp-for="IsDelete" value="false" class="form-control">
+                    <div class="col-md-6">
+                        <label for="inputName5" class="form-label">Tên danh mục</label>
+                        <input type="text" asp-for="CategoryName" placeholder="Du lịch trong nước..." class="form-control">
+                        <span class="text-danger">@TempData["CateNameRequired"]</span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputAddress5" class="form-label">Danh mục cha</label>
+                        <select class="form-control" id="ChooseCateType" asp-for="CategoryParrentId" asp-items="@ViewBag.ListParrentCate">
+                            <option value="0"> Không có danh mục cha</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputAddress5" class="form-label">Mô tả danh mục</label>
+                        <input type="text" class="form-control" asp-for="CategoryDesc" placeholder="36, Lê Lợi, Thành phố Vinh, Nghệ An">
+                        <span class="text-danger">@TempData["CateDescRequired"]</span>
+                    </div>
+
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-primary">Thêm mới ngay</button>
+                        <a class="btn mx-3 btn-secondary" asp-action="Index" asp-controller="Category" asp-area="Admin">Hủy bỏ</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+@{
+    var summerNote = new TechBlog.Areas.Admin.Models.SummerNote("#Detail");
+    <partial name="_SummerNote" model="summerNote" />
+}
+}

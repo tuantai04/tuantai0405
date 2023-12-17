@@ -1,0 +1,150 @@
+﻿@using TechBlog.Ultilities;
+@model IList<TechBlog.Models.Post>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<section class="section first-section">
+    <div class="container-fluid">
+        <div class="masonry-blog clearfix">
+            @foreach (var item in ViewBag.PostHeader)
+            {
+                var url = Functions.CreateSlugName(item.Category.CategoryName) + "/" + Functions.CreateSlugName(item.PostName) + "-" + item.PostId;
+                <div class="second-slot row-3-col">
+                    <div class="masonry-box post-media">
+                        <img src="~/images/@item.PostImage" alt="" class="img-fluid">
+                        <div class="shadoweffect">
+                            <div class="shadow-desc">
+                                <div class="blog-meta">
+                                    <span class="bg-orange"><a href="tech-category-01.html" title="">@item.Category.CategoryName</a></span>
+                                    <h4><a href="/@url" title="">@item.PostName</a></h4>
+                                    <small><a href="/@url" title="">03 July, 2017</a></small>
+                                    <small><a href="tech-author.html" title="">@item.CreatedByNavigation.FullName</a></small>
+                                </div><!-- end meta -->
+                            </div><!-- end shadow-desc -->
+                        </div><!-- end shadow -->
+                    </div><!-- end post-media -->
+                </div>
+            }
+            <!-- end first-side -->
+        </div><!-- end masonry -->
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <div class="page-wrapper">
+                    <div class="blog-top clearfix">
+                        <h4 class="pull-left">Tin mới trong ngày <a href="#"><i class="fa fa-rss"></i></a></h4>
+                    </div><!-- end blog-top -->
+
+                    <div class="blog-list clearfix">
+                        @foreach(var item in Model)
+                        {
+                            var url = Functions.CreateSlugName(item.Category.CategoryName) + "/" + Functions.CreateSlugName(item.PostName) + "-" + item.PostId;
+                            <div class="blog-box row">
+                                <div class="col-md-4">
+                                    <div class="post-media">
+                                        <a href="/@url" title="">
+                                            <img src="~/images/@item.PostImage" alt="" class="img-fluid">
+                                            <div class="hovereffect"></div>
+                                        </a>
+                                    </div><!-- end media -->
+                                </div><!-- end col -->
+
+                                <div class="blog-meta big-meta col-md-8">
+                                    <h4><a href="/@url" class="truncate-text" title="">@item.PostName</a></h4>
+                                    <p class="truncate-text  truncate-2-line">@item.PostTitle</p>
+                                    <small class="firstsmall "><a class="bg-orange" href="/@url" title="">@item.Category.CategoryName</a></small>
+                                    <small><a href="/@url" title="">21 July, 2017</a></small>
+                                    <small><a href="tech-author.html" title="">@item.CreatedByNavigation.FullName</a></small>
+                                    <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> @item.ViewNumber</a></small>
+                                </div><!-- end meta -->
+                            </div>
+
+                            <!-- end blog-box -->
+
+                            <hr class="invis">
+                        }
+                    </div><!-- end blog-list -->
+                </div><!-- end page-wrapper -->
+            </div><!-- end col -->
+
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <div class="sidebar">
+                    <div class="widget">
+                        <div class="banner-spot clearfix">
+                            <div class="banner-img">
+                                <img src="~/Client/images/doanh-nhan.jpg" alt="" class="img-fluid">
+                            </div><!-- end banner-img -->
+                        </div><!-- end banner -->
+                    </div><!-- end widget -->
+
+                    @await Component.InvokeAsync("TrendPost")
+                    <!-- end widget -->
+
+                    <div class="widget">
+                        <h2 class="widget-title">Bài viết xem nhiều </h2>
+                        <div class="blog-list-widget">
+                            <div class="list-group">
+                                @foreach (var item in ViewBag.PostHeader)
+                                {
+                                    var url = Functions.CreateSlugName(item.Category.CategoryName) + "/" + Functions.CreateSlugName(item.PostName) + "-" + item.PostId;
+                                    <a href="/@url" class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="w-100 justify-content-between">
+                                            <img src="~/images/@item.PostImage" alt="" class="img-fluid float-left">
+                                            <h5 class="mb-1 truncate-text truncate-2-line">@item.PostName</h5>
+                                        </div>
+                                    </a>
+                                }
+                                
+                            </div>
+                        </div><!-- end blog-list -->
+                    </div><!-- end widget -->
+                    <div class="widget">
+                        <h2 class="widget-title">Theo dõi chúng tôi</h2>
+
+                        <div class="row text-center">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button facebook-button">
+                                    <i class="fa fa-facebook"></i>
+                                    <p>27k</p>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button twitter-button">
+                                    <i class="fa fa-twitter"></i>
+                                    <p>98k</p>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button google-button">
+                                    <i class="fa fa-google-plus"></i>
+                                    <p>17k</p>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <a href="#" class="social-button youtube-button">
+                                    <i class="fa fa-youtube"></i>
+                                    <p>22k</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div><!-- end widget -->
+
+                    <div class="widget">
+                        <div class="banner-spot clearfix">
+                            <div class="banner-img">
+                                <img src="~/Client/images/banner-sidebar.jpeg" alt="" class="img-fluid">
+                            </div><!-- end banner-img -->
+                        </div><!-- end banner -->
+                    </div><!-- end widget -->
+                </div><!-- end sidebar -->
+            </div><!-- end col -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>

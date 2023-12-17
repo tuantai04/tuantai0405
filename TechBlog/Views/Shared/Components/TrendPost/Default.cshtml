@@ -1,0 +1,28 @@
+﻿@using TechBlog.Ultilities;
+@model IList<TechBlog.Models.Post>
+<div class="widget">
+    <h2 class="widget-title">Bài viết nổi bật</h2>
+    <div class="trend-videos">
+        @foreach (var item in Model)
+        {
+            var url = Functions.CreateSlugName(item.Category.CategoryName) + "/" + Functions.CreateSlugName(item.PostName) + "-" + item.PostId;
+            <div class="blog-box">
+                <div class="post-media">
+                    <a href="/@url" title="">
+                        <img src="~/images/@item.PostImage" alt="" class="img-fluid">
+                        <div class="hovereffect">
+                            <span class="videohover"></span>
+                        </div><!-- end hover -->
+                    </a>
+                </div><!-- end media -->
+                <div class="blog-meta">
+                    <h4><a href="/@url" title="">@item.PostName</a></h4>
+                </div><!-- end meta -->
+            </div>
+
+            <!-- end blog-box -->
+
+            <hr class="invis">
+        }
+    </div><!-- end videos -->
+</div>
